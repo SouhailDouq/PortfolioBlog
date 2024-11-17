@@ -1,37 +1,32 @@
 import { useState, useEffect } from 'react';
 
 export default function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-      localStorage.setItem('theme', theme);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'light';
     }
-  }, [theme, mounted]);
+    return 'light';
+  });
 
-  if (!mounted) {
-    return <div className="w-10 h-10"></div>; // Placeholder while loading
-  }
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   return (
     <button
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-      className="fixed bottom-5 right-5 p-2 rounded-lg bg-gray-200 dark:bg-gray-700 transition-colors"
+      className="fixed bottom-5 right-5 w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 transition-colors hover:bg-gray-300 dark:hover:bg-gray-600"
       aria-label="Toggle theme"
     >
-      {theme === 'light' ? '🌙' : '☀️'}
+      <span className="text-lg">
+        {theme === 'light' ? '🌙' : '☀️'}
+      </span>
     </button>
   );
 }
