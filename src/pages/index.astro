@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import FeaturedPosts from '../components/FeaturedPosts.astro';
+---
+
+<Layout title="Your Name - Homepage">
+  <div class="text-center">
+    <div class="relative inline-block">
+      <img
+        src="https://github.com/yourusername.png"
+        alt="Profile"
+        class="w-32 h-32 rounded-full border-2 border-primary mb-4 mx-auto"
+      />
+      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-blue-500 opacity-75 animate-gradient"></div>
+    </div>
+    <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text animate-gradient">
+      Hello, I'm Souhail!
+    </h1>
+    <p class="text-lg opacity-80 mb-8">
+      Digital Craftsman ( Developer / Designer )
+    </p>
+  </div>
+
+  <Section title="About">
+    <p class="leading-relaxed opacity-80">
+      I'm a full-stack developer based in France with a passion for building digital services/stuff. 
+      I have a knack for all things launching products, from planning and designing all the way to solving real-life problems with code.
+    </p>
+  </Section>
+
+  <Section title="Featured Posts">
+    <FeaturedPosts />
+  </Section>
+
+  <Section title="Bio">
+    <div class="space-y-4">
+      <div class="flex group">
+        <span class="font-bold w-24 text-primary">2020</span>
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Started working as a freelance developer</span>
+      </div>
+      <div class="flex group">
+        <span class="font-bold w-24 text-primary">2018</span>
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Completed the Computer Science degree</span>
+      </div>
+    </div>
+  </Section>
+
+  <Section title="I ♥">
+    <p class="leading-relaxed opacity-80">
+      Music, Photography, Machine Learning, Open Source
+    </p>
+  </Section>
+
+  <Section title="On the web">
+    <div class="flex flex-wrap gap-4">
+      <a
+        href="https://github.com/yourusername"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
+      >
+        <span class="mr-2">👾</span> GitHub
+      </a>
+      <a
+        href="https://twitter.com/yourusername"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
+      >
+        <span class="mr-2">🐦</span> Twitter
+      </a>
+    </div>
+  </Section>
+</Layout>

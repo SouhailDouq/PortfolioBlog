@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => data.featured);
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  {posts.map((post) => (
+    <a 
+      href={`/blog/${post.slug}`}
+      class="group block overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-shadow"
+    >
+      {post.data.image && (
+        <div class="aspect-video overflow-hidden">
+          <img
+            src={post.data.image}
+            alt={post.data.title}
+            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-200"
+          />
+        </div>
+      )}
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+          {post.data.title}
+        </h3>
+        <time class="text-sm text-gray-500 block mb-2">
+          {post.data.pubDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        <p class="text-gray-600 dark:text-gray-300 line-clamp-2">
+          {post.data.description}
+        </p>
+      </div>
+    </a>
+  ))}
+</div>

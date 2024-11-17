@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+
+const works = [
+  {
+    title: "Project One",
+    description: "A description of your first project",
+    link: "https://github.com/yourusername/project-one"
+  },
+  {
+    title: "Project Two",
+    description: "A description of your second project",
+    link: "https://github.com/yourusername/project-two"
+  }
+];
+---
+
+<Layout title="Works">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Works</h1>
+  
+  <div class="space-y-12">
+    {works.map((work) => (
+      <Section title={work.title}>
+        <p class="text-gray-600 mb-4">{work.description}</p>
+        <a 
+          href={work.link}
+          class="inline-block bg-primary text-white px-4 py-2 rounded-md hover:opacity-80 transition-opacity"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Project
+        </a>
+      </Section>
+    ))}
+  </div>
+</Layout>

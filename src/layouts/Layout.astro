@@ -1,0 +1,50 @@
+---
+import '@fontsource/m-plus-rounded-1c/400.css';
+import '@fontsource/m-plus-rounded-1c/700.css';
+import Header from '../components/Header.astro';
+import ThemeToggle from '../components/ThemeToggle';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Portfolio and Blog" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-200 font-mplus min-h-screen">
+    <div class="container max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Header />
+      <main class="mt-8 pb-16">
+        <slot />
+      </main>
+    </div>
+    <ThemeToggle client:only="react" />
+  </body>
+</html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  ::selection {
+    background-color: #319795;
+    color: white;
+  }
+</style>
