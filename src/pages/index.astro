@@ -1,75 +1,158 @@
----
-import Layout from '../layouts/Layout.astro';
-import Section from '../components/Section.astro';
-import FeaturedPosts from '../components/FeaturedPosts.astro';
----
+---  
+import Layout from '../layouts/Layout.astro';  
+import Section from '../components/Section.astro';  
+import FeaturedPosts from '../components/FeaturedPosts.astro';  
+import InterestCard from '../components/InterestCard.astro';
+---  
 
-<Layout title="Your Name - Homepage">
-  <div class="text-center">
-    <div class="relative inline-block">
-      <img
-        src="https://github.com/yourusername.png"
-        alt="Profile"
-        class="w-32 h-32 rounded-full border-2 border-primary mb-4 mx-auto"
-      />
-      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-blue-500 opacity-75 animate-gradient"></div>
-    </div>
-    <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text animate-gradient">
-      Hello, I'm Souhail!
-    </h1>
-    <p class="text-lg opacity-80 mb-8">
-      Digital Craftsman ( Developer / Designer )
-    </p>
-  </div>
+<Layout title="Your Name - Homepage">  
+  <div class="text-center">  
+    <div class="relative inline-block">  
+      <img  
+        src="https://github.com/yourusername.png"  
+        alt="Profile"  
+        class="w-32 h-32 rounded-full border-2 border-primary mb-4 mx-auto"  
+      />  
+      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-blue-500 opacity-75 animate-gradient"></div>  
+    </div>  
+    <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text animate-gradient">  
+      Hello, I'm Souhail!  
+    </h1>  
+    <p class="text-lg opacity-80 mb-8">  
+      Digital Craftsman ( Developer / Writer / Creator )  
+    </p>  
+  </div>  
 
-  <Section title="About">
-    <p class="leading-relaxed opacity-80">
-      I'm a full-stack developer based in France with a passion for building digital services/stuff. 
-      I have a knack for all things launching products, from planning and designing all the way to solving real-life problems with code.
-    </p>
-  </Section>
+  <Section title="About">  
+    <p class="leading-relaxed opacity-80">  
+      I'm a full-stack developer based in France with a passion for building digital services/stuff.  
+      I have a knack for all things launching products, from planning and designing all the way to solving real-life problems with code.  
+    </p>  
+  </Section>  
 
-  <Section title="Featured Posts">
-    <FeaturedPosts />
-  </Section>
+  <Section title="Featured Posts">  
+    <FeaturedPosts />  
+  </Section>  
 
-  <Section title="Bio">
-    <div class="space-y-4">
-      <div class="flex group">
-        <span class="font-bold w-24 text-primary">2020</span>
-        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Started working as a freelance developer</span>
-      </div>
-      <div class="flex group">
-        <span class="font-bold w-24 text-primary">2018</span>
-        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Completed the Computer Science degree</span>
-      </div>
-    </div>
-  </Section>
+  <Section title="Bio">  
+    <div class="space-y-4">  
+      <div class="flex group">  
+        <span class="font-bold w-24 text-primary">1995</span>  
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Born in Taza, Morocco.</span>  
+      </div>  
+      <div class="flex group">  
+        <span class="font-bold w-24 text-primary">2021</span>  
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Graduated as a state Engineer from FSTM, Morocco.</span>  
+      </div>  
+      <div class="flex group">  
+        <span class="font-bold w-24 text-primary">2022</span>  
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Worked at High tech payment systems, Morocco.</span>  
+      </div>  
+      <div class="flex group">  
+        <span class="font-bold w-24 text-primary">2023</span>  
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Worked at Altametris, France.</span>  
+      </div>  
+      <div class="flex group">  
+        <span class="font-bold w-24 text-primary">2024</span>  
+        <span class="opacity-80 group-hover:opacity-100 transition-opacity">Works at Michelin, France.</span>  
+      </div>  
+    </div>  
+  </Section>  
+
 
   <Section title="I ♥">
-    <p class="leading-relaxed opacity-80">
-      Music, Photography, Machine Learning, Open Source
-    </p>
-  </Section>
+    <div class="grid gap-6 md:grid-cols-2">
+      <InterestCard icon="✈️" title="Traveling">
+        <p class="mb-2">Exploring new places and cultures</p>
+        <div class="flex flex-wrap gap-2">
+          <span title="Norway">🇳🇴</span>
+          <span title="Switzerland">🇨🇭</span>
+          <span title="Italy">🇮🇹</span>
+          <span title="Monaco">🇲🇨</span>
+          <span title="France">🇫🇷</span>
+          <span title="Netherlands">🇳🇱</span>
+          <span title="Tunisia">🇹🇳</span>
+          <span title="Spain">🇪🇸</span>
+        </div>
+      </InterestCard>
 
-  <Section title="On the web">
-    <div class="flex flex-wrap gap-4">
-      <a
-        href="https://github.com/yourusername"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
-      >
-        <span class="mr-2">👾</span> GitHub
-      </a>
-      <a
-        href="https://twitter.com/yourusername"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"
-      >
-        <span class="mr-2">🐦</span> Twitter
-      </a>
+      <InterestCard icon="🎬" title="Movies">
+        <p>Cinema enthusiast</p>
+        <a 
+          href="https://letterboxd.com/yourusername" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-primary hover:underline inline-flex items-center mt-1"
+        >
+          Check my Letterboxd <span class="ml-1">→</span>
+        </a>
+      </InterestCard>
+
+      <InterestCard icon="📚" title="Reading">
+        <div class="space-y-1">
+          <p>Passionate about:</p>
+          <ul class="list-disc list-inside">
+            <li>Books</li>
+            <li>Manga</li>
+            <li>Technical Articles</li>
+          </ul>
+        </div>
+      </InterestCard>
+
+      <InterestCard icon="✍️" title="Writing">
+        <p>I share my thoughts about anything on my blog posts.</p>
+        <a 
+          href="/blog" 
+          class="text-primary hover:underline inline-flex items-center mt-1"
+        >
+          Read my blog <span class="ml-1">→</span>
+        </a>
+      </InterestCard>
     </div>
   </Section>
+
+  <Section title="On the web">  
+    <div class="flex flex-wrap gap-4">  
+      <a  
+        href="https://github.com/yourusername"  
+        target="_blank"  
+        rel="noopener noreferrer"  
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"  
+      >  
+        <span class="mr-2">👾</span> GitHub  
+      </a>  
+      <a  
+        href="https://twitter.com/yourusername"  
+        target="_blank"  
+        rel="noopener noreferrer"  
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"  
+      >  
+        <span class="mr-2">🐦</span> Twitter  
+      </a>  
+      <a  
+        href="https://www.linkedin.com/in/yourusername"  
+        target="_blank"  
+        rel="noopener noreferrer"  
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"  
+      >  
+        <span class="mr-2">🔗</span> LinkedIn  
+      </a>  
+      <a  
+        href="mailto:your.email@example.com"  
+        target="_blank"  
+        rel="noopener noreferrer"  
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"  
+      >  
+        <span class="mr-2">✉️</span> Email  
+      </a>  
+      <a  
+        href="https://www.tiktok.com/@yourusername"  
+        target="_blank"  
+        rel="noopener noreferrer"  
+        class="inline-flex items-center px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:opacity-80 transition-opacity"  
+      >  
+        <span class="mr-2">🎵</span> TikTok  
+      </a>  
+    </div>  
+  </Section>    
 </Layout>
