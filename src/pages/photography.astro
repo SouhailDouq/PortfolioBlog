@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Cloudinary } from "@cloudinary/url-gen";
+import PhotoGallery from '../components/PhotoGallery.astro';
+
+// Initialize Cloudinary
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'dmmivxqit' // Replace with your Cloudinary cloud name
+  }
+});
+
+// Example photo data - you would typically store this in a CMS or database
+const photos = [
+  {
+    id: 1,
+    title: "Sunset at the Beach",
+    type: "polaroid",
+    date: "2024-03-21",
+    publicId: "norway_bikes_friends", // Replace with your Cloudinary public ID
+    description: "Captured with my Polaroid camera during sunset"
+  },
+  {
+    id: 2,
+    title: "City Lights",
+    type: "phone",
+    date: "2024-03-20",
+    publicId: "norway_bikes_friends",
+    description: "Night photography with my phone camera"   
+
+
+  }
+];
+---
+
+<Layout title="Photography">
+  <div class="mb-12">
+    <h1 class="text-3xl font-bold mb-6">Photography</h1>
+    
+    <div class="prose dark:prose-invert mb-8">
+      <p>
+        A collection of moments captured through my lens, featuring both digital and Polaroid photography.
+        Each image tells its own story, frozen in time.
+      </p>
+    </div>
+
+    <div class="flex gap-4 mb-8">
+      <button
+        class="px-4 py-2 rounded-full bg-primary text-white hover:opacity-90 transition-opacity"
+        data-filter="all"
+      >
+        All Photos
+      </button>
+      <button
+        class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-filter="polaroid"
+      >
+        Polaroid
+      </button>
+      <button
+        class="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-filter="phone"
+      >
+        Phone Camera
+      </button>
+    </div>
+
+    <PhotoGallery photos={photos} />
+  </div>
+</Layout>
+
+<script>
+  // Filter functionality
+  const buttons = document.querySelectorAll('[data-filter]');
+  const items = document.querySelectorAll('[data-type]');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+      
+      // Update active button styles
+      buttons.forEach(btn => {
+        if (btn === button) {
+          btn.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+          btn.classList.add('bg-primary', 'text-white');
+        } else {
+          btn.classList.remove('bg-primary', 'text-white');
+          btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+        }
+      });
+
+      // Filter items
+      items.forEach(item => {
+        if (filter === 'all' || item.getAttribute('data-type') === filter) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

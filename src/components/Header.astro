@@ -17,6 +17,12 @@ const currentPath = pathname.slice(1);
         </a>
       </li>
       <li>
+        <a href="/photography" class={`hover:text-primary transition-colors relative group ${currentPath === 'photography' ? 'text-primary' : ''}`}>
+          Photography
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+        </a>
+      </li>
+      <li>
         <a href="/blog" class={`hover:text-primary transition-colors relative group ${currentPath === 'blog' ? 'text-primary' : ''}`}>
           Blog
           <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>

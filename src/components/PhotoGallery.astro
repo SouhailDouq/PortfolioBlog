@@ -1,0 +1,62 @@
+---
+import 'photoswipe/style.css';
+
+interface Photo {
+  id: number;
+  title: string;
+  type: string;
+  date: string;
+  publicId: string;
+  description: string;
+}
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {photos.map((photo) => (
+    <div 
+      class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow"
+      data-type={photo.type}
+    >
+      <a
+        href={`https://res.cloudinary.com/dmmivxqit/image/upload/${photo.publicId}`}
+        data-pswp-width="1600"
+        data-pswp-height="1200"
+        target="_blank"
+        class="block aspect-square"
+      >
+        <img
+          src={`https://res.cloudinary.com/dmmivxqit/image/upload/c_fill,g_auto,h_500,w_500/${photo.publicId}`}
+          alt={photo.title}
+          class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-200"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-end">
+          <div class="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+            <h3 class="text-lg font-bold">{photo.title}</h3>
+            <p class="text-sm">{photo.description}</p>
+            <time class="text-sm opacity-75 block mt-1">{new Date(photo.date).toLocaleDateString()}</time>
+          </div>
+        </div>
+      </a>
+    </div>
+  ))}
+</div>
+
+<script>
+  import PhotoSwipe from 'photoswipe';
+
+  const options = {
+    gallery: '#gallery',
+    children: 'a',
+    pswpModule: PhotoSwipe
+  };
+
+  const gallery = new PhotoSwipe(options);
+  gallery.init();
+</script>
