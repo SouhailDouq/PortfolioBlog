@@ -1,35 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Cloudinary } from "@cloudinary/url-gen";
-import PhotoGallery from '../components/PhotoGallery.astro';
 
 // Initialize Cloudinary
 const cld = new Cloudinary({
   cloud: {
-    cloudName: 'dmmivxqit' // Replace with your Cloudinary cloud name
+    cloudName: 'dmmivxqit'
   }
 });
 
-// Example photo data - you would typically store this in a CMS or database
+// Example photo data
 const photos = [
   {
     id: 1,
-    title: "Sunset at the Beach",
-    type: "polaroid",
-    date: "2024-03-21",
-    publicId: "norway_bikes_friends", // Replace with your Cloudinary public ID
-    description: "Captured with my Polaroid camera during sunset"
+    title: "Heavenly day in norway",
+    type: "phone",
+    date: "2024-05-06",
+    publicId: "norway_bikes_friends",
+    description: "Captured with my iphone after a bike ride with friends in Gravin, Norway.",
+    featured: true
   },
   {
     id: 2,
-    title: "City Lights",
+    title: "Now We Are Free",
     type: "phone",
-    date: "2024-03-20",
-    publicId: "norway_bikes_friends",
-    description: "Night photography with my phone camera"   
-
-
+    date: "2024-12-25",
+    publicId: "swiss_eren_lake",
+    description: "Captured with my iphone after a walk with friends in Ennetbürgen, Switzerland.",
+    featured: true
   }
+  // Add more photos as needed
 ];
 ---
 
@@ -39,7 +39,7 @@ const photos = [
     
     <div class="prose dark:prose-invert mb-8">
       <p>
-        A collection of moments captured through my lens, featuring both digital and Polaroid photography.
+        A collection of moments captured through my lens, featuring both digital and Polaroid photography. <br/>
         Each image tells its own story, frozen in time.
       </p>
     </div>
@@ -65,8 +65,96 @@ const photos = [
       </button>
     </div>
 
-    <PhotoGallery photos={photos} />
+    <div class="grid grid-cols-12 gap-6">
+      {photos.map((photo, index) => {
+        const isFeatured = photo.featured;
+        const colSpan = isFeatured ? "col-span-12 md:col-span-8" : "col-span-12 md:col-span-4";
+        const imgHeight = isFeatured ? "h-[600px]" : "h-[400px]";
+        
+        return (
+          <div 
+            class={`group relative ${colSpan} cursor-pointer`}
+            data-type={photo.type}
+            data-modal-trigger={photo.id}
+          >
+            <div class={`relative ${imgHeight} overflow-hidden rounded-lg`}>
+              <img
+                src={`https://res.cloudinary.com/dmmivxqit/image/upload/c_fill,g_auto,w_1200/${photo.publicId}`}
+                alt={photo.title}
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </div>
+            <div class="mt-4">
+              <h3 class="text-xl font-bold group-hover:text-primary transition-colors">{photo.title}</h3>
+              <time class="text-sm text-gray-500 dark:text-gray-400 block mt-1">
+                {new Date(photo.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            </div>
+          </div>
+        )
+      })}
+    </div>
   </div>
+
+  <!-- Modal Template -->
+  {photos.map((photo) => (
+    <div
+      id={`modal-${photo.id}`}
+      class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-6"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="fixed inset-0 bg-black/70 transition-opacity" data-modal-overlay></div>
+      
+      <div class="relative max-w-6xl w-full bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden transform transition-all">
+        <div class="absolute top-0 right-0 pt-4 pr-4">
+          <button
+            type="button"
+            class="text-gray-400 hover:text-gray-500 focus:outline-none"
+            data-modal-close
+          >
+            <span class="sr-only">Close</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="flex flex-col md:flex-row">
+          <div class="md:w-2/3">
+            <img
+              src={`https://res.cloudinary.com/dmmivxqit/image/upload/${photo.publicId}`}
+              alt={photo.title}
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="p-6 md:w-1/3">
+            <h3 class="text-2xl font-bold mb-2">{photo.title}</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">{photo.description}</p>
+            <div class="space-y-4">
+              <p class="text-sm">
+                <span class="font-semibold">Date:</span> {new Date(photo.date).toLocaleDateString()}
+              </p>
+              <p class="text-sm">
+                <span class="font-semibold">Type:</span> {photo.type.charAt(0).toUpperCase() + photo.type.slice(1)}
+              </p>
+              <p class="text-sm">
+                <span class="font-semibold">Description:</span> {photo.description}
+              </p>
+              <p class="text-sm">
+                <span class="font-semibold">Date:</span> {new Date(photo.date).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
 </Layout>
 
 <script>
@@ -78,7 +166,6 @@ const photos = [
     button.addEventListener('click', () => {
       const filter = button.getAttribute('data-filter');
       
-      // Update active button styles
       buttons.forEach(btn => {
         if (btn === button) {
           btn.classList.remove('bg-gray-200', 'dark:bg-gray-700');
@@ -89,7 +176,6 @@ const photos = [
         }
       });
 
-      // Filter items
       items.forEach(item => {
         if (filter === 'all' || item.getAttribute('data-type') === filter) {
           item.style.display = 'block';
@@ -98,5 +184,50 @@ const photos = [
         }
       });
     });
+  });
+
+  // Modal functionality
+  const modalTriggers = document.querySelectorAll('[data-modal-trigger]');
+  const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
+  const modalOverlays = document.querySelectorAll('[data-modal-overlay]');
+
+  modalTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const modalId = trigger.getAttribute('data-modal-trigger');
+      const modal = document.getElementById(`modal-${modalId}`);
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeModal = (modal) => {
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  };
+
+  modalCloseButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const modal = button.closest('[role="dialog"]');
+      closeModal(modal);
+    });
+  });
+
+  modalOverlays.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      const modal = overlay.closest('[role="dialog"]');
+      closeModal(modal);
+    });
+  });
+
+  // Close modal on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const openModal = document.querySelector('[role="dialog"]:not(.hidden)');
+      if (openModal) {
+        closeModal(openModal);
+      }
+    }
   });
 </script>
