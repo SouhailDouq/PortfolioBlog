@@ -1,0 +1,172 @@
+---
+title: "A Beginner's Guide to Microservice Architecture: Building Your First Microservice Using Spring Boot and Spring Cloud (Part 1)"
+description: "Learn the basics of microservices and create your first microservice using Spring Boot and Spring Cloud."
+pubDate: 2024-11-18
+tags: ["microservices", "spring-boot", "spring-cloud", "java"]
+image: "https://plus.unsplash.com/premium_photo-1723914054622-5e11ec4d8b3f?q=80&w=2032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+featured: true
+---
+
+In this part one of a series of tutorials, we will be building our very own microservices project responsible for handling student registrations.
+
+To build our microservice project, we will use Spring Boot, specifically Spring Cloud. But first, let’s discuss the microservices architecture.
+
+## Why Use Microservices?
+
+Microservices allow you to develop and deploy application components independently, making it easier to scale services based on specific requirements.
+
+Companies like Netflix, Google, and Amazon have successfully adopted microservices, citing advantages such as:
+
+- **Better scalability:** Scale each microservice independently based on its requirements.
+- **Easier understanding:** By breaking applications into smaller, simpler components, it’s easier for large teams to manage.
+- **Independent components:** Each microservice has its own dependencies and can be updated without affecting others. This simplifies maintenance, bug fixes, and adding features.
+
+### Challenges of Microservices
+
+While beneficial, microservices also introduce complexities, especially in ensuring effective communication between services. You must weigh the pros and cons to decide if microservices are suitable for your application.
+
+## Tools and Project Setup
+
+We’ll use Spring Boot and Spring Cloud to manage configurations, service discovery, circuit breakers, and more. These tools make it easier to manage distributed systems.
+
+### Requirements:
+
+- **IDE:** IntelliJ IDEA (or your preferred IDE)
+- **JDK:** 17+
+
+#### Creating a Maven Project in IntelliJ
+
+1. Set `groupId` to `org.example`.
+2. Set `artifactId` to a unique project name.
+3. Click **Finish**.
+
+Delete the `src` folder and clear unnecessary dependencies from the `pom.xml`.
+
+### Adding Project Dependencies
+
+Dependencies in the `pom.xml` are managed in two ways:
+
+- **`<dependencies>`:** Always included in child modules.
+- **`<dependencyManagement>`:** Included in child modules only if specified in their `pom.xml`.
+
+Here’s an example of the parent module's `pom.xml`:
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>MicroservicesProject</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.dependencies.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
+```
+
+## Creating Your First Microservice: Student Module
+
+1. Add the following to the parent module's `pom.xml`:
+
+```xml
+<modules>
+    <module>student</module>
+</modules>
+```
+
+## Inside the `pom.xml` File of Our Student Module
+
+Let's go ahead and add a dependency for Spring Web.
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>MicroservicesProject</artifactId>
+        <groupId>org.example</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>student</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>students</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+Basically, your pom.xml for the student module will look like this
+Inside the student, module let's go ahead and create a package called org.example.student, and inside it let's create a java file called StudentApplication and add the following code :
+
+```java
+package org.example.student;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StudentApplication{
+    public static void main(String[] args) {
+        SpringApplication.run(StudentApplication.class, args);
+    }
+}
+```
+
+After that we create a new file called application.yml inside the resources folder and add the following code :
+
+```yml
+server:
+  port: 8080
+
+spring:
+  application:
+    name: student
+```
+
+And that's it we have our first microservice it doesn't do anything but we can get it up and running.
+This should do it for our first part of the tutorial, in the second part, we will create other microservices and see how we can make them communicate with each other ✌.
+The second part of this tutorial is up, you can find it right HERE.
