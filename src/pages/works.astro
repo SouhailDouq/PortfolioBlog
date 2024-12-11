@@ -4,15 +4,18 @@ import Section from '../components/Section.astro';
 
 const works = [
   {
-    title: "Project One",
-    description: "A description of your first project",
-    link: "https://github.com/yourusername/project-one"
+    title: "Vibefolio",
+    description: "The ultimate platform for tracking and discovering entertainment content, it helps you keep track of your favorite shows and movies, and discover new ones to add to your collection.",
+    link: "https://www.vibefolio.live/",
+    image: "/images/vibefolio.png",
+    imageAlt: "Vibefolio website screenshot",
   },
   {
-    title: "Project Two",
-    description: "A description of your second project",
-    link: "https://github.com/yourusername/project-two"
-  }
+    title: "Tax tally",
+    description: "TaxTally helps you estimate tax liability for your stock and crypto trades, providing real-time calculations and AI-powered optimization strategies.",
+    image: "/images/taxtally.png",
+    link: "https://taxtally.netlify.app/"
+  },
 ];
 ---
 
@@ -21,15 +24,45 @@ const works = [
   <div class="space-y-12">
     {works.map((work) => (
       <Section title={work.title}>
-        <p class="text-gray-600 mb-4">{work.description}</p>
-        <a 
-          href={work.link}
-          class="inline-block bg-primary text-white px-4 py-2 rounded-md hover:opacity-80 transition-opacity"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View Project
-        </a>
+        {work.image && (
+          <div class="mb-6 overflow-hidden rounded-lg shadow-lg group relative transform hover:-translate-y-1 transition-all duration-300 ease-out">
+            <a href={work.link} target="_blank" rel="noopener noreferrer" class="block">
+              <div class="relative overflow-hidden">
+                <img
+                  src={work.image}
+                  alt={work.imageAlt}
+                  class="w-full h-auto object-cover transform transition-all duration-500 ease-out group-hover:scale-105"
+                  style="max-height: 350px;"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                  <span class="text-white font-medium px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    View Project
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
+        <div class="max-w-2xl mx-auto">
+          {work.tags && (
+            <div class="flex flex-wrap gap-2 mb-3 justify-center">
+              {work.tags.map(tag => (
+                <span class="px-3 py-1 text-sm bg-gray-100 rounded-full text-gray-700">{tag}</span>
+              ))}
+            </div>
+          )}
+          <p class="text-gray-600 mb-4 text-center">{work.description}</p>
+          <div class="text-center">
+            <a 
+              href={work.link}
+              class="inline-block bg-primary text-white px-6 py-2 rounded-md hover:opacity-80 transition-opacity"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Project
+            </a>
+          </div>
+        </div>
       </Section>
     ))}
   </div>
